@@ -1,0 +1,19 @@
+# Output directories
+DATA_OUTPUT/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE
+.vscode/
+.idea/
+
+# Environment
+venv/
+env/
+.env
+
+# Logs
+*.log 

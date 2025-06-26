@@ -12,7 +12,7 @@ import glob
 # 日志解析正则模式
 # ----------------------
 LOG_PATTERN = re.compile(
-    r'^(?P<timestamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})\s+\[(?P<thread>[^\]]+)\]\s+(?P<level>[A-Z]+)\s+(?P<classpath>.+?)\s+-\s+(?P<message>.+)$'
+    r'^(?P<timestamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{3})\s+(?P<level>[A-Z]+)\s+(?P<process_id>\d+)\s+---\s+\[(?P<thread>[^\]]+)\]\s+(?P<classpath>.+?)\s+:\s+(?P<message>.+)$'
 )
 
 # ----------------------
@@ -20,18 +20,20 @@ LOG_PATTERN = re.compile(
 # ----------------------
 ALLOWED_LEVELS = {"INFO", "ERROR", "WARN", "DEBUG", "TRACE"}  # 可保留的日志级别
 INCLUDE_KEYWORDS = [
+    # Gateway相关
+    "gateway", "route", "filter", "token", "jwt", "auth",
     # 用户相关
-    "user", "account", "login", "auth",
-    # 系统组件
-    "controller", "service", "repository", "config",
+    "user", "admin", "account", "login", "validation",
     # API相关
-    "http", "api", "request", "response",
-    # 数据相关
-    "data", "database", "sql", "asset",
-    # 监控相关
-    "alert", "dashboard", "audit", "runtime",
-    # 通用关键词
-    "getting", "creating", "updating", "deleting", "processing"
+    "api", "request", "response", "http", "controller", "service",
+    # 系统组件
+    "spring", "cloud", "netflix", "eureka", "discovery",
+    # 安全相关
+    "security", "令牌", "验证", "过期", "failed", "success",
+    # 路由相关
+    "RouteDefinition", "matched", "applying", "LoadBalancer",
+    # 错误相关
+    "error", "exception", "expired", "timeout"
 ]  # 类路径或消息中包含任一关键词即保留
 
 
@@ -125,8 +127,9 @@ def process_all_logs(data_dir: Path = None, to_json: bool = False):
     
     # 创建输出目录（以当前时间戳命名）
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_dir = data_dir / f"processed_{timestamp}"
-    output_dir.mkdir(exist_ok=True)
+    # 修改为使用项目根目录下的DATA_OUTPUT
+    output_dir = Path(__file__).parent.parent.parent / "DATA_OUTPUT" / f"processed_{timestamp}"
+    output_dir.mkdir(exist_ok=True, parents=True)
     
     print(f"🚀 开始处理日志文件...")
     print(f"📁 数据目录: {data_dir}")
