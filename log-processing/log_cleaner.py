@@ -230,7 +230,7 @@ def process_logs(input_dir_path: str):
         return
     
     # 设置输出目录
-    output_base_dir = Path("./data/output")
+    output_base_dir = Path(__file__).parent.parent / "DATA_OUTPUT"
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     dir_name = input_dir.name
     output_dir = output_base_dir / f"processed_{dir_name}_{timestamp}"

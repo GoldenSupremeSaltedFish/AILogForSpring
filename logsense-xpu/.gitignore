@@ -1,0 +1,193 @@
+# 数据文件 - 不上传敏感日志数据
+data/
+*.csv
+*.json
+*.log
+*.txt
+
+# 模型文件 - 训练好的模型文件通常很大
+*.pth
+*.pt
+*.pkl
+*.joblib
+models/
+checkpoints/
+
+# Python 缓存文件
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# 分发/打包
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# 单元测试/覆盖率报告
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# 环境变量
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE设置
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# 日志文件
+*.log
+logs/
+
+# 临时文件
+tmp/
+temp/
+.tmp/
+
+# 实验和调试文件
+experiments/
+debug/
+test_output/
+
+# Python额外缓存
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+
+# Conda环境
+.conda/
+conda-meta/
+
+# Poetry
+poetry.lock
+
+# 机器学习相关
+*.h5
+*.hdf5
+*.npy
+*.npz
+*.mat
+wandb/
+mlruns/
+.tensorboard/
+runs/
+
+# Jupyter扩展
+.jupyter/
+.ipython/
+
+# 编译后的二进制文件
+*.exe
+*.dll
+*.dylib
+*.so.*
+
+# 数据库文件
+*.db
+*.sqlite
+*.sqlite3
+
+# 压缩文件
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# 备份文件
+*.bak
+*.backup
+*.orig
+*.rej
+
+# Node.js (如果有前端组件)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 系统生成的文件
+.trash/
+.Trash/
+.recycle/
+
+# 编译文件
+*.o
+*.obj
+*.class
+
+# 其他临时缓存
+.sass-cache/
+.pytest_cache/
+.tox/ 

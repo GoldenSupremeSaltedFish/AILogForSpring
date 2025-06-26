@@ -34,8 +34,8 @@ def process_logs(input_dir_path):
         return
     
     # 设置输出目录
-    project_root = Path(__file__).parent
-    output_base_dir = project_root / "data" / "output"
+    project_root = Path(__file__).parent.parent
+    output_base_dir = project_root / "DATA_OUTPUT"
     
     # 创建输出目录
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

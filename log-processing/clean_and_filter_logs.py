@@ -169,8 +169,9 @@ def process_all_logs(data_dir: Path = None, to_json: bool = False):
     
     # 创建输出目录（以当前时间戳命名）
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_dir = data_dir / f"processed_{timestamp}"
-    output_dir.mkdir(exist_ok=True)
+    # 修改为使用项目根目录下的DATA_OUTPUT
+    output_dir = Path(__file__).parent.parent / "DATA_OUTPUT" / f"processed_{timestamp}"
+    output_dir.mkdir(exist_ok=True, parents=True)
     
     print(f"🚀 开始处理日志文件...")
     print(f"📁 数据目录: {data_dir}")
