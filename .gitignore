@@ -1,5 +1,6 @@
 # Output directories
 DATA_OUTPUT/
+log-processing-OUTPUT/
 
 # Python
 __pycache__/
