@@ -1,0 +1,13 @@
+日志标签审查报告
+==================================================
+审查时间: 2025-07-24 23:35:31
+输入文件: c:\Users\30871\Desktop\AILogForSpring\log-processing-OUTPUT\batch_labeled_20250630_235700\gate_way_logs_gateway-service.log.2025-06-13.1_cleaned_labeled_20250630_235701.csv
+输出文件: c:\Users\30871\Desktop\AILogForSpring\dataset-ready\gate_way_logs_gateway-service.log.2025-06-13.1_cleaned_labeled_20250630_235701_reviewed_20250724_233218.csv
+
+统计信息:
+总计: 42628 条
+已审查: 70 条
+确认正确: 45 条
+修改标签: 25 条
+跳过: 0 条
+准确率: 64.3%

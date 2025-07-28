@@ -1,6 +1,7 @@
 # Output directories
 DATA_OUTPUT/
 log-processing-OUTPUT/
+issue-logs/
 
 # Python
 __pycache__/
@@ -16,5 +17,8 @@ venv/
 env/
 .env
 
+# Configuration files with sensitive data
+config.json
+
 # Logs
-*.log 
+*.log
