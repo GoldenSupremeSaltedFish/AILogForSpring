@@ -183,13 +183,46 @@ class EnhancedPreClassifier:
         self.save_results(results, input_file, output_dir)
         return results
     
+    def extract_project_name(self, filename: str) -> str:
+        """从文件名中提取项目名称"""
+        base_name = os.path.splitext(os.path.basename(filename))[0]
+        
+        # 常见的项目名称模式
+        project_patterns = {
+            'apache_camel': 'apache-camel',
+            'spring-boot': 'spring-boot', 
+            'spring-cloud': 'spring-cloud',
+            'spring-security': 'spring-security',
+            'jhipster': 'jhipster',
+            'spring-projects': 'spring-projects'
+        }
+        
+        # 尝试匹配项目名称
+        for pattern, project_name in project_patterns.items():
+            if pattern in base_name.lower():
+                return project_name
+        
+        # 如果没有匹配到，尝试从文件名开头提取
+        parts = base_name.split('_')
+        if len(parts) > 0:
+            return parts[0].replace('-', '_')
+        
+        return 'unknown_project'
+
     def save_results(self, results: Dict[str, Any], input_file: str, output_dir: str):
         """保存分类结果"""
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         base_name = os.path.splitext(os.path.basename(input_file))[0]
         
-        # 创建时间戳子目录
-        timestamped_dir = os.path.join(output_dir, f"classification_{timestamp}")
+        # 提取项目名称
+        project_name = self.extract_project_name(input_file)
+        
+        # 创建项目子目录
+        project_dir = os.path.join(output_dir, project_name)
+        os.makedirs(project_dir, exist_ok=True)
+        
+        # 在项目目录下创建时间戳子目录
+        timestamped_dir = os.path.join(project_dir, f"classification_{timestamp}")
         os.makedirs(timestamped_dir, exist_ok=True)
         
         # 保存详细结果 (JSON)
@@ -218,6 +251,7 @@ class EnhancedPreClassifier:
         report_file = os.path.join(timestamped_dir, f"{base_name}_report.txt")
         with open(report_file, 'w', encoding='utf-8') as f:
             f.write(f"日志分类报告\n")
+            f.write(f"项目: {project_name}\n")
             f.write(f"文件: {results['file_name']}\n")
             f.write(f"处理时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
             f.write(f"总行数: {results['total_lines']}\n")
@@ -228,6 +262,7 @@ class EnhancedPreClassifier:
                 f.write(f"  {category}: {count}\n")
         
         print(f"结果已保存到: {timestamped_dir}")
+        print(f"项目分组: {project_name}")
     
     def batch_process(self, input_dir: str, output_dir: str):
         """批量处理目录中的所有日志文件"""
