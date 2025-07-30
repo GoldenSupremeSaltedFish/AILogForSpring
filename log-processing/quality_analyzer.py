@@ -20,6 +20,10 @@ from collections import Counter
 import warnings
 warnings.filterwarnings('ignore')
 
+# Configure matplotlib for Chinese font support
+plt.rcParams['font.sans-serif'] = ['SimHei', 'Microsoft YaHei', 'DejaVu Sans']
+plt.rcParams['axes.unicode_minus'] = False
+
 class QualityAnalyzer:
     """日志分类质量分析器"""
     
@@ -48,7 +52,41 @@ class QualityAnalyzer:
             11: '极低优先级',
             999: '忽略级别'
         }
+        
+        # 添加默认输出目录配置
+        self.default_output_base = r"c:\Users\30871\Desktop\AILogForSpring\DATA_OUTPUT\质量分析结果"
     
+    def convert_numpy_types(self, obj):
+        """Convert numpy types to native Python types for JSON serialization"""
+        if isinstance(obj, dict):
+            return {key: self.convert_numpy_types(value) for key, value in obj.items()}
+        elif isinstance(obj, list):
+            return [self.convert_numpy_types(item) for item in obj]
+        elif isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        else:
+            return obj
+    
+    def get_output_directory(self, file_path: str, custom_output_dir: str = None) -> str:
+        """获取输出目录，按文件名创建子文件夹"""
+        if custom_output_dir:
+            base_dir = custom_output_dir
+        else:
+            base_dir = self.default_output_base
+        
+        # 从文件路径提取文件名（不含扩展名）
+        file_name = os.path.splitext(os.path.basename(file_path))[0]
+        
+        # 创建以文件名命名的子目录
+        output_dir = os.path.join(base_dir, file_name)
+        os.makedirs(output_dir, exist_ok=True)
+        
+        return output_dir
+
     def load_data(self, file_path: str) -> pd.DataFrame:
         """加载分类数据"""
         try:
@@ -62,16 +100,16 @@ class QualityAnalyzer:
     def basic_statistics(self, df: pd.DataFrame) -> Dict:
         """基础统计分析"""
         stats = {
-            'total_records': len(df),
+            'total_records': int(len(df)),  # Convert to int
             'log_level_distribution': df['log_level'].value_counts().to_dict(),
             'content_type_distribution': df['content_type'].value_counts().to_dict(),
             'priority_distribution': df['priority'].value_counts().to_dict(),
             'manual_annotation_needed': {
-                'count': df['manual_annotation_needed'].sum(),
-                'percentage': (df['manual_annotation_needed'].sum() / len(df)) * 100
+                'count': int(df['manual_annotation_needed'].sum()),  # Convert to int
+                'percentage': float((df['manual_annotation_needed'].sum() / len(df)) * 100)  # Convert to float
             }
         }
-        return stats
+        return self.convert_numpy_types(stats)
     
     def quality_metrics(self, df: pd.DataFrame) -> Dict:
         """质量指标计算"""
@@ -79,25 +117,25 @@ class QualityAnalyzer:
         
         # 分类覆盖率
         classified_count = len(df[df['content_type'] != 'other'])
-        metrics['classification_coverage'] = (classified_count / len(df)) * 100
+        metrics['classification_coverage'] = float((classified_count / len(df)) * 100)
         
         # 高优先级比例
         high_priority_count = len(df[df['priority'] <= 4])
-        metrics['high_priority_ratio'] = (high_priority_count / len(df)) * 100
+        metrics['high_priority_ratio'] = float((high_priority_count / len(df)) * 100)
         
         # 需要人工标注比例
         manual_needed = df['manual_annotation_needed'].sum()
-        metrics['manual_annotation_ratio'] = (manual_needed / len(df)) * 100
+        metrics['manual_annotation_ratio'] = float((manual_needed / len(df)) * 100)
         
         # 日志级别分布均衡性（熵值）
         level_counts = df['log_level'].value_counts(normalize=True)
-        metrics['level_distribution_entropy'] = -sum(p * np.log2(p) for p in level_counts if p > 0)
+        metrics['level_distribution_entropy'] = float(-sum(p * np.log2(p) for p in level_counts if p > 0))
         
         # 分类分布均衡性
         type_counts = df['content_type'].value_counts(normalize=True)
-        metrics['type_distribution_entropy'] = -sum(p * np.log2(p) for p in type_counts if p > 0)
+        metrics['type_distribution_entropy'] = float(-sum(p * np.log2(p) for p in type_counts if p > 0))
         
-        return metrics
+        return self.convert_numpy_types(metrics)
     
     def anomaly_detection(self, df: pd.DataFrame) -> Dict:
         """异常检测"""
@@ -164,6 +202,10 @@ class QualityAnalyzer:
     
     def create_visualizations(self, df: pd.DataFrame, output_dir: str):
         """创建可视化图表"""
+        # 确保中文字体正确显示
+        plt.rcParams['font.sans-serif'] = ['SimHei', 'Microsoft YaHei', 'DejaVu Sans']
+        plt.rcParams['axes.unicode_minus'] = False
+        
         plt.style.use('default')
         fig, axes = plt.subplots(2, 2, figsize=(15, 12))
         fig.suptitle('日志分类质量分析报告', fontsize=16, fontweight='bold')
@@ -200,35 +242,16 @@ class QualityAnalyzer:
         
         plt.tight_layout()
         
-        # 保存图表
+        # 保存图表，确保支持中文文件名
         chart_path = os.path.join(output_dir, 'quality_analysis_charts.png')
-        plt.savefig(chart_path, dpi=300, bbox_inches='tight')
+        plt.savefig(chart_path, dpi=300, bbox_inches='tight', facecolor='white')
         plt.close()
         
         print(f"📊 可视化图表已保存: {chart_path}")
-    
-    # 添加默认输出目录配置
-    self.default_output_base = r"c:\Users\30871\Desktop\AILogForSpring\DATA_OUTPUT\质量分析结果"
-    
-    def get_output_directory(self, file_path: str, custom_output_dir: str = None) -> str:
-        """获取输出目录，按文件名创建子文件夹"""
-        if custom_output_dir:
-            base_dir = custom_output_dir
-        else:
-            base_dir = self.default_output_base
-        
-        # 从文件路径提取文件名（不含扩展名）
-        file_name = os.path.splitext(os.path.basename(file_path))[0]
-        
-        # 创建以文件名命名的子目录
-        output_dir = os.path.join(base_dir, file_name)
-        os.makedirs(output_dir, exist_ok=True)
-        
-        return output_dir
 
     def generate_report(self, file_path: str, output_dir: str = None):
         """生成完整的质量分析报告"""
-        # 使用新的输出目录逻辑
+        # Use new output directory logic
         output_dir = self.get_output_directory(file_path, output_dir)
         
         os.makedirs(output_dir, exist_ok=True)
@@ -258,7 +281,7 @@ class QualityAnalyzer:
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         report_file = os.path.join(output_dir, f'quality_analysis_report_{timestamp}.txt')
         
-        with open(report_file, 'w', encoding='utf-8') as f:
+        with open(report_file, 'w', encoding='utf-8-sig') as f:
             f.write("="*60 + "\n")
             f.write("日志分类质量分析报告\n")
             f.write("="*60 + "\n")
@@ -318,7 +341,8 @@ class QualityAnalyzer:
         
         # 生成JSON格式的详细数据
         json_file = os.path.join(output_dir, f'quality_analysis_data_{timestamp}.json')
-        analysis_data = {
+        # Apply conversion before JSON serialization
+        analysis_data = self.convert_numpy_types({
             'metadata': {
                 'file_path': file_path,
                 'analysis_time': datetime.now().isoformat(),
@@ -328,7 +352,7 @@ class QualityAnalyzer:
             'quality_metrics': metrics,
             'anomalies': anomalies,
             'recommendations': recommendations
-        }
+        })
         
         with open(json_file, 'w', encoding='utf-8') as f:
             json.dump(analysis_data, f, ensure_ascii=False, indent=2)
