@@ -1,0 +1,13 @@
+{
+  "model_type": "gradient_boosting",
+  "sample_size": 300,
+  "target_classes": [
+    "stack_exception",
+    "connection_issue",
+    "database_exception",
+    "auth_authorization",
+    "memory_performance"
+  ],
+  "feature_dim": 3000,
+  "training_time": "2025-08-02T01:45:00.628056"
+}

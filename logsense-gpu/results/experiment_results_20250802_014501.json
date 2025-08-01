@@ -1,0 +1,14 @@
+{
+  "accuracy": 0.88,
+  "training_time": 13.617989,
+  "feature_dim": 3000,
+  "sample_size": 300,
+  "model_type": "gradient_boosting",
+  "target_classes": [
+    "stack_exception",
+    "connection_issue",
+    "database_exception",
+    "auth_authorization",
+    "memory_performance"
+  ]
+}
