@@ -12,6 +12,7 @@
 import os
 import platform
 import psutil
+import time
 from typing import Dict, Optional, Tuple
 import warnings
 warnings.filterwarnings('ignore')
@@ -217,7 +218,6 @@ class PerformanceMonitor:
     
     def start_monitoring(self):
         """开始监控"""
-        import time
         self.start_time = time.time()
         self.memory_usage = []
         self.cpu_usage = []
@@ -295,4 +295,4 @@ def setup_environment():
 
 
 if __name__ == "__main__":
-    setup_environment() 
+    setup_environment()
