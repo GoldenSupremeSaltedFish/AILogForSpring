@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogSense GPU API 测试</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; }
+        .section { margin-bottom: 30px; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        textarea, input { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; }
+        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .result { margin-top: 15px; padding: 15px; border-radius: 4px; }
+        .success { background: #d4edda; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; border: 1px solid #f5c6cb; }
+        .loading { text-align: center; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 LogSense GPU API 测试界面</h1>
+        
+        <div class="section">
+            <h2>📊 服务状态</h2>
+            <div id="status">检查中...</div>
+        </div>
+        
+        <div class="section">
+            <h2>🎯 单条预测</h2>
+            <textarea id="single-log" rows="4" placeholder="输入日志文本...">java.lang.NullPointerException: Cannot invoke "String.length()" because "str" is null</textarea>
+            <input type="number" id="single-top-k" value="3" placeholder="Top-K" min="1" max="5">
+            <button onclick="predictSingle()">预测</button>
+            <div id="single-result"></div>
+        </div>
+        
+        <div class="section">
+            <h2>📦 批量预测</h2>
+            <textarea id="batch-logs" rows="6" placeholder="输入多条日志，每行一条...">java.lang.NullPointerException: Cannot invoke "String.length()" because "str" is null
+Connection refused: connect to database server failed
+OutOfMemoryError: Java heap space</textarea>
+            <input type="number" id="batch-top-k" value="2" placeholder="Top-K" min="1" max="5">
+            <button onclick="predictBatch()">批量预测</button>
+            <div id="batch-result"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:5000';
+        
+        async function checkHealth() {
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                const data = await response.json();
+                document.getElementById('status').innerHTML = 
+                    `<div class="result success">✅ 服务正常 - 模型已加载</div>`;
+            } catch (error) {
+                document.getElementById('status').innerHTML = 
+                    `<div class="result error">❌ 服务不可用</div>`;
+            }
+        }
+        
+        async function predictSingle() {
+            const logText = document.getElementById('single-log').value;
+            const topK = document.getElementById('single-top-k').value;
+            
+            document.getElementById('single-result').innerHTML = '<div class="loading">预测中...</div>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/predict`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({log_text: logText, top_k: parseInt(topK)})
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('single-result').innerHTML = `
+                        <div class="result success">
+                            <h3>预测结果</h3>
+                            <p><strong>类别:</strong> ${data.predicted_class}</p>
+                            <p><strong>置信度:</strong> ${data.confidence_percentage.toFixed(2)}%</p>
+                            <h4>Top-${topK} 结果:</h4>
+                            ${data.top_k_predictions.map(p => 
+                                `<p>${p.class}: ${p.percentage.toFixed(2)}%</p>`
+                            ).join('')}
+                        </div>
+                    `;
+                } else {
+                    document.getElementById('single-result').innerHTML = 
+                        `<div class="result error">预测失败: ${data.error}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('single-result').innerHTML = 
+                    `<div class="result error">请求失败: ${error.message}</div>`;
+            }
+        }
+        
+        async function predictBatch() {
+            const logTexts = document.getElementById('batch-logs').value.split('\n').filter(t => t.trim());
+            const topK = document.getElementById('batch-top-k').value;
+            
+            document.getElementById('batch-result').innerHTML = '<div class="loading">批量预测中...</div>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/predict/batch`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({log_texts: logTexts, top_k: parseInt(topK)})
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('batch-result').innerHTML = `
+                        <div class="result success">
+                            <h3>批量预测结果 (${data.total_count}条)</h3>
+                            ${data.predictions.map(pred => `
+                                <div style="margin: 10px 0; padding: 10px; border: 1px solid #ddd;">
+                                    <p><strong>日志 ${pred.index + 1}:</strong> ${pred.predicted_class}</p>
+                                    <p>置信度: ${pred.confidence_percentage.toFixed(2)}%</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                } else {
+                    document.getElementById('batch-result').innerHTML = 
+                        `<div class="result error">批量预测失败: ${data.error}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('batch-result').innerHTML = 
+                    `<div class="result error">请求失败: ${error.message}</div>`;
+            }
+        }
+        
+        window.onload = checkHealth;
+    </script>
+</body>
+</html> 
