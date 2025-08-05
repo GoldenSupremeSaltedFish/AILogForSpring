@@ -1,0 +1,75 @@
+{
+  "auth_authorization": {
+    "precision": 0.22485207100591717,
+    "recall": 0.29862475442043224,
+    "f1-score": 0.25654008438818565,
+    "support": 509.0
+  },
+  "business_logic": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 72.0
+  },
+  "config_environment": {
+    "precision": 0.21666666666666667,
+    "recall": 0.18571428571428572,
+    "f1-score": 0.2,
+    "support": 490.0
+  },
+  "connection_issue": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 101.0
+  },
+  "database_exception": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 186.0
+  },
+  "memory_performance": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 53.0
+  },
+  "monitoring_heartbeat": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 94.0
+  },
+  "normal_operation": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 103.0
+  },
+  "spring_boot_startup_failure": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 15.0
+  },
+  "stack_exception": {
+    "precision": 0.6706016755521707,
+    "recall": 0.838970938542163,
+    "f1-score": 0.7453968253968254,
+    "support": 2099.0
+  },
+  "accuracy": 0.538420204191295,
+  "macro avg": {
+    "precision": 0.11121204132247545,
+    "recall": 0.1323309978676881,
+    "f1-score": 0.1201936909785011,
+    "support": 3722.0
+  },
+  "weighted avg": {
+    "precision": 0.43745547764446124,
+    "recall": 0.538420204191295,
+    "f1-score": 0.48177507777042533,
+    "support": 3722.0
+  }
+}

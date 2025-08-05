@@ -22,3 +22,7 @@ config.json
 
 # Logs
 *.log
+
+# Data files
+*.csv
+*.pth
