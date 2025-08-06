@@ -1,0 +1,49 @@
+{
+  "total_samples": 30275,
+  "label_distribution": {
+    "stack_exception": {
+      "count": 22928,
+      "percentage": 75.73245251857969
+    },
+    "database_exception": {
+      "count": 762,
+      "percentage": 2.5169281585466554
+    },
+    "connection_issue": {
+      "count": 505,
+      "percentage": 1.6680429397192404
+    },
+    "auth_authorization": {
+      "count": 2134,
+      "percentage": 7.048720066061106
+    },
+    "config_environment": {
+      "count": 2460,
+      "percentage": 8.125516102394716
+    },
+    "business_logic": {
+      "count": 212,
+      "percentage": 0.7002477291494632
+    },
+    "normal_operation": {
+      "count": 580,
+      "percentage": 1.9157720891824936
+    },
+    "monitoring_heartbeat": {
+      "count": 337,
+      "percentage": 1.1131296449215524
+    },
+    "memory_performance": {
+      "count": 227,
+      "percentage": 0.749793559042114
+    },
+    "spring_boot_startup_failure": {
+      "count": 130,
+      "percentage": 0.42939719240297275
+    }
+  },
+  "imbalance_ratio": 176.36923076923077,
+  "num_classes": 10,
+  "timestamp": "20250806_224624",
+  "session_dir": "results/history_results\\training_session_20250806_224624"
+}
