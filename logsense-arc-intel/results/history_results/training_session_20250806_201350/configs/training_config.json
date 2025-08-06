@@ -1,0 +1,25 @@
+{
+  "model_type": "textcnn",
+  "epochs": 30,
+  "patience": 8,
+  "batch_size": 32,
+  "learning_rate": 0.001,
+  "weight_decay": 0.01,
+  "model_config": {
+    "vocab_size": 8000,
+    "embed_dim": 128,
+    "num_classes": 10,
+    "filter_sizes": [
+      3,
+      4,
+      5
+    ],
+    "num_filters": 128,
+    "dropout": 0.5
+  },
+  "device": "xpu:0",
+  "data_path": "data/processed_logs_improved.csv",
+  "num_classes": 10,
+  "timestamp": "20250806_201350",
+  "session_dir": "results/history_results\\training_session_20250806_201350"
+}

@@ -1,0 +1,26 @@
+{
+  "model_type": "textcnn",
+  "best_val_acc": 22.333333333333332,
+  "best_f1": 0.21580563636710096,
+  "test_acc": 18.333333333333332,
+  "test_f1": 0.18123981850359341,
+  "total_epochs": 13,
+  "final_epoch": 13,
+  "num_classes": 10,
+  "actual_classes": [
+    "auth_authorization",
+    "business_logic",
+    "config_environment",
+    "connection_issue",
+    "database_exception",
+    "memory_performance",
+    "monitoring_heartbeat",
+    "normal_operation",
+    "spring_boot_startup_failure",
+    "stack_exception"
+  ],
+  "device": "xpu:0",
+  "timestamp": "20250806_201350",
+  "session_dir": "results/history_results\\training_session_20250806_201350",
+  "created_at": "2025-08-06T20:14:12.840644"
+}
