@@ -1,0 +1,10 @@
+{
+  "best_val_acc": 73.82328654004955,
+  "best_val_f1": 0.6952342907496827,
+  "test_acc": 72.54335260115607,
+  "test_f1": 0.7011485798413921,
+  "final_epoch": 9,
+  "total_epochs": 9,
+  "timestamp": "20250806_224624",
+  "session_dir": "results/history_results\\training_session_20250806_224624"
+}
