@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-TextCNN with Attention 模型实现
+改进的TextCNN with Attention - 在卷积层后直接应用注意力
 """
 
 import torch
@@ -9,18 +9,17 @@ import torch.nn as nn
 import torch.nn.functional as F
 from typing import List
 
-# 导入AttentionLayer
-from .attention_layer import AttentionLayer
+from .multi_attention import MultiHeadAttention
 
 
-class TextCNNWithAttention(nn.Module):
-    """带注意力机制的TextCNN模型"""
+class TextCNNImprovedAttention(nn.Module):
+    """改进的TextCNN with Attention - 在卷积特征上直接应用注意力"""
     
     def __init__(self, vocab_size: int = 10000, embed_dim: int = 128, 
                  num_classes: int = 10, filter_sizes: List[int] = None,
                  num_filters: int = 128, dropout: float = 0.5,
-                 attention_dim: int = 128):
-        super(TextCNNWithAttention, self).__init__()
+                 num_heads: int = 4):
+        super(TextCNNImprovedAttention, self).__init__()
         
         if filter_sizes is None:
             filter_sizes = [3, 4, 5]
@@ -32,8 +31,12 @@ class TextCNNWithAttention(nn.Module):
         ])
         self.dropout = nn.Dropout(dropout)
         
-        # 注意力层
-        self.attention = AttentionLayer(len(filter_sizes) * num_filters, attention_dim)
+        # 在卷积特征上应用注意力
+        self.attention = MultiHeadAttention(
+            embed_dim=num_filters,
+            num_heads=num_heads,
+            dropout=dropout
+        )
         
         # 全连接层
         self.fc = nn.Linear(len(filter_sizes) * num_filters, num_classes)
@@ -46,7 +49,7 @@ class TextCNNWithAttention(nn.Module):
             'filter_sizes': filter_sizes,
             'num_filters': num_filters,
             'dropout': dropout,
-            'attention_dim': attention_dim
+            'num_heads': num_heads
         }
     
     def forward(self, x):
@@ -61,25 +64,27 @@ class TextCNNWithAttention(nn.Module):
         embedded = self.embedding(x)  # [batch_size, seq_len, embed_dim]
         embedded = embedded.permute(0, 2, 1)  # [batch_size, embed_dim, seq_len]
         
-        # 卷积层
+        # 卷积层 + 注意力
         conv_outputs = []
         for conv in self.convs:
             conv_out = F.relu(conv(embedded))  # [batch_size, num_filters, seq_len-k+1]
-            pooled = F.max_pool1d(conv_out, conv_out.size(2))  # [batch_size, num_filters, 1]
-            conv_outputs.append(pooled.squeeze(2))
+            
+            # 将卷积输出转换为序列形式用于注意力
+            # [batch_size, num_filters, seq_len-k+1] -> [batch_size, seq_len-k+1, num_filters]
+            conv_out = conv_out.permute(0, 2, 1)
+            
+            # 应用注意力
+            attended = self.attention(conv_out)  # [batch_size, seq_len-k+1, num_filters]
+            
+            # 全局平均池化
+            pooled = torch.mean(attended, dim=1)  # [batch_size, num_filters]
+            conv_outputs.append(pooled)
         
         # 拼接所有卷积输出
         concatenated = torch.cat(conv_outputs, dim=1)  # [batch_size, len(filter_sizes) * num_filters]
         
-        # 应用注意力机制
-        # 将特征重塑为序列形式用于注意力
-        features_seq = concatenated.unsqueeze(1)  # [batch_size, 1, feature_dim]
-        
-        # 应用注意力
-        attended_features, attention_weights = self.attention(features_seq)
-        
         # Dropout
-        dropped = self.dropout(attended_features)
+        dropped = self.dropout(concatenated)
         
         # 全连接层
         output = self.fc(dropped)
@@ -92,4 +97,4 @@ class TextCNNWithAttention(nn.Module):
     
     def count_parameters(self):
         """计算模型参数数量"""
-        return sum(p.numel() for p in self.parameters() if p.requires_grad)
+        return sum(p.numel() for p in self.parameters() if p.requires_grad) 

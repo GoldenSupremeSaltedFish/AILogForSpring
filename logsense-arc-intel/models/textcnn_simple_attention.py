@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-TextCNN with Attention 模型实现
+简化的TextCNN with Attention - 针对日志分类优化
 """
 
 import torch
@@ -9,18 +9,49 @@ import torch.nn as nn
 import torch.nn.functional as F
 from typing import List
 
-# 导入AttentionLayer
-from .attention_layer import AttentionLayer
+
+class SimpleAttention(nn.Module):
+    """简化的注意力机制 - 专门针对日志分类优化"""
+    
+    def __init__(self, embed_dim: int, dropout: float = 0.3):
+        super(SimpleAttention, self).__init__()
+        self.embed_dim = embed_dim
+        
+        # 简化的注意力计算
+        self.attention = nn.Sequential(
+            nn.Linear(embed_dim, embed_dim // 2),
+            nn.ReLU(),
+            nn.Dropout(dropout),
+            nn.Linear(embed_dim // 2, 1)
+        )
+        
+        self.dropout = nn.Dropout(dropout)
+    
+    def forward(self, x):
+        """
+        前向传播
+        Args:
+            x: 输入张量 [batch_size, seq_len, embed_dim]
+        Returns:
+            输出张量 [batch_size, embed_dim]
+        """
+        # 计算注意力权重
+        attention_weights = self.attention(x)  # [batch_size, seq_len, 1]
+        attention_weights = F.softmax(attention_weights, dim=1)  # [batch_size, seq_len, 1]
+        
+        # 应用注意力权重
+        attended = torch.sum(x * attention_weights, dim=1)  # [batch_size, embed_dim]
+        
+        return attended
 
 
-class TextCNNWithAttention(nn.Module):
-    """带注意力机制的TextCNN模型"""
+class TextCNNSimpleAttention(nn.Module):
+    """简化的TextCNN with Attention - 针对日志分类优化"""
     
     def __init__(self, vocab_size: int = 10000, embed_dim: int = 128, 
                  num_classes: int = 10, filter_sizes: List[int] = None,
-                 num_filters: int = 128, dropout: float = 0.5,
-                 attention_dim: int = 128):
-        super(TextCNNWithAttention, self).__init__()
+                 num_filters: int = 128, dropout: float = 0.5):
+        super(TextCNNSimpleAttention, self).__init__()
         
         if filter_sizes is None:
             filter_sizes = [3, 4, 5]
@@ -32,8 +63,11 @@ class TextCNNWithAttention(nn.Module):
         ])
         self.dropout = nn.Dropout(dropout)
         
-        # 注意力层
-        self.attention = AttentionLayer(len(filter_sizes) * num_filters, attention_dim)
+        # 简化的注意力机制
+        self.attention = SimpleAttention(
+            embed_dim=len(filter_sizes) * num_filters,
+            dropout=dropout
+        )
         
         # 全连接层
         self.fc = nn.Linear(len(filter_sizes) * num_filters, num_classes)
@@ -45,8 +79,7 @@ class TextCNNWithAttention(nn.Module):
             'num_classes': num_classes,
             'filter_sizes': filter_sizes,
             'num_filters': num_filters,
-            'dropout': dropout,
-            'attention_dim': attention_dim
+            'dropout': dropout
         }
     
     def forward(self, x):
@@ -71,12 +104,12 @@ class TextCNNWithAttention(nn.Module):
         # 拼接所有卷积输出
         concatenated = torch.cat(conv_outputs, dim=1)  # [batch_size, len(filter_sizes) * num_filters]
         
-        # 应用注意力机制
-        # 将特征重塑为序列形式用于注意力
+        # 应用简化的注意力机制
+        # 将特征重塑为序列形式
         features_seq = concatenated.unsqueeze(1)  # [batch_size, 1, feature_dim]
         
         # 应用注意力
-        attended_features, attention_weights = self.attention(features_seq)
+        attended_features = self.attention(features_seq)  # [batch_size, feature_dim]
         
         # Dropout
         dropped = self.dropout(attended_features)
@@ -92,4 +125,4 @@ class TextCNNWithAttention(nn.Module):
     
     def count_parameters(self):
         """计算模型参数数量"""
-        return sum(p.numel() for p in self.parameters() if p.requires_grad)
+        return sum(p.numel() for p in self.parameters() if p.requires_grad) 
