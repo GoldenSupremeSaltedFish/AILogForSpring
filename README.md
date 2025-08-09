@@ -1,130 +1,176 @@
 # AILogForSpring 项目
 
 ## 项目概述
-基于Spring Boot的AI日志处理和分析项目，支持多种日志格式的处理、清洗、去重和分类。
+基于AI的智能日志处理和分析平台，支持多种日志格式的自动清洗、分类、标签化和机器学习分析。项目集成了传统机器学习方法和深度学习模型，提供端到端的日志分析解决方案。
 
-## 目录结构
+## 核心功能
 
-```
-AILogForSpring/
-├── README.md                    # 项目说明
-├── log-processing/             # 日志处理脚本
-│   ├── log_cleaner.py          # 通用日志清洗器
-│   ├── universal_log_cleaner.py # 通用日志清洗器（策略模式）
-│   ├── clean_and_filter_logs.py # 日志清洗和过滤
-│   └── process_logs.py         # 日志处理脚本
-├── gateway-tools/              # Gateway处理工具
-│   ├── gateway_processor.py    # Gateway处理器
-│   ├── process_gateway.py      # Gateway处理脚本
-│   └── process_gateway_logs.py # Gateway日志处理
-├── batch-scripts/              # 批处理脚本
-│   └── run_gateway_process.bat # Gateway处理批处理
-├── utilities/                  # 通用工具
-├── documentation/              # 项目文档
-└── logsense-xpu/              # LogSense-XPU子项目
-    ├── main.py                # 主入口
-    ├── core/                  # 核心模块
-    ├── scripts/               # 功能脚本
-    ├── data/                  # 数据目录
-    └── docs/                  # 文档
-```
+### 🔍 智能日志处理
+- **自动标签系统**: 基于机器学习的半自动日志标签辅助器
+- **数据清洗**: 智能去重、格式标准化、质量分析
+- **分类系统**: 多级日志分类和异常检测
+- **质量评估**: 自动评估日志数据质量和完整性
+
+### 🤖 机器学习分析
+- **Intel Arc GPU支持**: 基于Intel Arc显卡的深度学习训练
+- **多模型架构**: TextCNN、FastText、注意力机制等
+- **分阶段训练**: 支持大规模数据的分阶段训练策略
+- **模型比较**: 多种模型性能对比和优化
+
+### 🛠️ 实用工具
+- **批处理脚本**: Windows一键运行脚本
+- **API服务**: RESTful API接口服务
+- **数据可视化**: 训练过程和结果可视化
+- **持久化管理**: 完整的训练状态和模型管理
 
 ## 快速开始
 
 ### 1. 环境准备
 ```bash
-cd logsense-xpu
-pip install -r config/requirements.txt
+# 安装基础依赖
+pip install -r logsense-arc-intel/requirements.txt
+
+# 安装Intel GPU支持（可选）
+pip install intel-extension-for-pytorch
 ```
 
-### 2. 日志处理
+### 2. 日志处理流程
+
+#### 自动标签处理
 ```bash
-# 使用通用日志清洗器
-python log-processing/universal_log_cleaner.py <日志目录>
+# 使用批处理脚本（推荐）
+batch-scripts/run_auto_labeler.bat
 
-# 处理Gateway日志
-python gateway-tools/process_gateway_logs.py <Gateway日志目录>
+# 或直接运行
+python log-processing/auto_labeler.py
 ```
 
-### 3. LogSense-XPU子项目
+#### 数据清洗和平衡
 ```bash
-cd logsense-xpu
-python main.py  # 查看可用功能
+# 清洗数据并创建训练集
+batch-scripts/run_data_cleaner.bat
+
+# 或直接运行
+python log-processing/data_cleaner.py --combined
 ```
 
-## 功能特点
+#### 质量分析
+```bash
+# 分析日志质量
+batch-scripts/run_quality_analyzer.bat
 
-- **多格式支持**: 支持Gateway、MQTT、User等多种日志格式
-- **智能处理**: 基于策略模式的智能日志识别和处理
-- **高效去重**: 精确去重和模糊去重两种模式
-- **机器学习**: 基于Intel XPU的日志分类和异常检测
-- **模块化设计**: 清晰的功能分离和代码组织
+# 或直接运行
+python log-processing/quality_analyzer.py
+```
 
-## 子项目说明
+### 3. 机器学习训练
 
-### LogSense-XPU
-高级日志分析子项目，包含：
+#### Intel Arc GPU训练
+```bash
+cd logsense-arc-intel
+python start_training.py
+```
+
+#### 分阶段训练
+```bash
+# 使用批处理脚本
+batch-scripts/run_enhanced_training.bat
+
+# 或直接运行
+python staged_training.py
+```
+
+### 4. API服务启动
+```bash
+# GPU版本API
+python logsense-arc-intel/api_server_gpu.py
+
+# 或使用批处理脚本
+batch-scripts/run_enhanced_training.bat
+```
+
+## 项目模块说明
+
+### 📁 log-processing/
+日志处理核心模块，包含：
+- `auto_labeler.py`: 智能日志标签辅助器
+- `data_cleaner.py`: 数据清洗和平衡工具
+- `quality_analyzer.py`: 日志质量分析器
+- `log_categorizer.py`: 日志分类器
+- `log_reviewer.py`: 日志审查工具
+- `enhanced_pre_classifier.py`: 增强预分类器
+
+### 📁 logsense-arc-intel/
+基于Intel Arc GPU的深度学习模块：
+- 支持TextCNN、FastText等多种模型
+- 完整的训练流程和模型管理
+- GPU加速训练和推理
+- 分阶段训练策略
+
+### 📁 logsense-gpu/
+GPU优化版本，包含：
+- 基线模型训练
+- 增强模型开发
+- API服务接口
+- 结果可视化
+
+### 📁 logsense-xpu/
+XPU优化版本，专注于：
 - 数据预处理和清洗
-- embedding向量构造
-- 机器学习模型训练
-- 异常检测和分类
+- 基线模型实现
+- 轻量级API服务
 
-详细使用说明请参考 `logsense-xpu/docs/` 目录。
+### 📁 batch-scripts/
+Windows批处理脚本集合：
+- 一键运行各种处理流程
+- 自动化数据清洗和训练
+- 简化操作流程
 
-## 项目开发日志
+### 📁 gateway-tools/
+Gateway日志专用处理工具：
+- Gateway日志格式识别
+- 专用清洗和过滤
+- 批量处理支持
 
-### 📅 2025-06-21 (今日更新)
+## 使用示例
 
-**🎯 今日完成**:
-- ✅ **半自动日志标签辅助器**: 开发了智能日志标签系统
-  - 支持8种标签类型：auth_error, db_error, timeout, api_success, ignore, system_error, network_error, performance
-  - 实现"机器预标 + 人工校正"的半自动化流程
-  - 集成scikit-learn实现智能分类
-- ✅ **优化输出路径**: 统一输出至`log-processing-OUTPUT`目录
-- ✅ **自动化处理**: 支持自动处理`DATA_OUTPUT`目录下的所有CSV文件
-- ✅ **批处理支持**: 新增`run_auto_labeler.bat`实现一键处理
+### 完整工作流程
+1. **数据准备**: 将日志文件放入`DATA_OUTPUT/`目录
+2. **自动标签**: 运行`run_auto_labeler.bat`进行智能标签
+3. **数据清洗**: 运行`run_data_cleaner.bat`清洗和平衡数据
+4. **质量分析**: 运行`run_quality_analyzer.bat`评估数据质量
+5. **模型训练**: 运行`run_enhanced_training.bat`开始训练
+6. **API部署**: 启动API服务进行实时预测
 
-**📊 处理效果**:
-- 示例数据测试: 6条日志实现100%正确分类
-- 真实数据验证: 成功处理536条Gateway日志
-- 分类分布: 
-  - 认证错误: 28.9%
-  - 心跳检测: 5.8%
-  - 其他类型: 65.3%
+### 支持的日志格式
+- **Gateway日志**: 自动识别和处理
+- **MQTT日志**: 支持消息队列日志
+- **系统日志**: 通用系统日志格式
+- **应用日志**: 自定义应用日志格式
 
-**🔧 技术特点**:
-- 基于机器学习的智能预分类
-- 支持批量处理多个CSV文件
-- 灵活的标签类型系统
-- 人机协作的校正机制
+## 技术特点
 
-**📈 项目进度**:
-- [x] 数据采集和预处理 (100%)
-- [x] 日志清洗和去重 (100%)
-- [x] 自动标签系统 (100%)
-- [ ] embedding向量构造 (计划中)
-- [ ] 模型训练和评估 (计划中)
+### 🎯 智能化处理
+- 基于机器学习的自动标签系统
+- 智能数据清洗和去重
+- 多级分类和异常检测
 
-**🎉 里程碑**: 完成半自动标签系统，显著提升日志分类效率！
+### ⚡ 高性能计算
+- Intel Arc GPU加速支持
+- 分阶段训练策略
+- 内存优化和并行处理
 
----
+### 🔧 模块化设计
+- 清晰的功能分离
+- 可扩展的架构
+- 完整的工具链
 
-### 📅 项目历史记录
-
-**2025-06-20**:
-- 🚀 项目启动
-- 📁 创建LogSense-XPU子项目基础结构
-- 🔧 开发日志文件重命名工具
-- 📝 识别不同日志格式差异
-
-**未来计划** (下次更新):
-- 🎯 开始embedding向量构造模块开发
-- 🤖 集成Intel XPU支持
-- 📊 开发数据可视化工具
-
----
+### 📊 可视化支持
+- 训练过程监控
+- 结果可视化
+- 性能指标分析
 
 ## 开发团队
-日志处理和AI分析项目团队
+AI日志分析项目团队
 
-**项目维护**: 每日更新进度，记录技术决策和解决方案
+**项目维护**: 持续更新和优化，支持多种日志格式和机器学习模型
