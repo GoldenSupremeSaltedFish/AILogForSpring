@@ -1,0 +1,129 @@
+{
+  "timestamp": "20250810_100629",
+  "model_path": "results/models/feature_enhanced_model_20250809_103658.pth",
+  "data_path": "data/processed_logs_advanced_enhanced.csv",
+  "statistics": {
+    "accuracy": {
+      "mean": 0.114,
+      "std": 0.0,
+      "min": 0.114,
+      "max": 0.114
+    },
+    "f1_score": {
+      "mean": 0.051978611154020075,
+      "std": 0.0,
+      "min": 0.051978611154020075,
+      "max": 0.051978611154020075
+    }
+  },
+  "category_analysis": {
+    "auth_authorization": {
+      "sample_count": 500,
+      "accuracy": 0.062,
+      "f1_score": 0.1167608286252354,
+      "prediction_distribution": {
+        "business_logic": 235,
+        "stack_exception": 230,
+        "auth_authorization": 31,
+        "connection_issue": 4
+      }
+    },
+    "business_logic": {
+      "sample_count": 500,
+      "accuracy": 0.38,
+      "f1_score": 0.5507246376811594,
+      "prediction_distribution": {
+        "stack_exception": 290,
+        "business_logic": 190,
+        "auth_authorization": 20
+      }
+    },
+    "config_environment": {
+      "sample_count": 500,
+      "accuracy": 0.0,
+      "f1_score": 0.0,
+      "prediction_distribution": {
+        "stack_exception": 315,
+        "business_logic": 169,
+        "auth_authorization": 11,
+        "connection_issue": 5
+      }
+    },
+    "connection_issue": {
+      "sample_count": 500,
+      "accuracy": 0.0,
+      "f1_score": 0.0,
+      "prediction_distribution": {
+        "business_logic": 37,
+        "stack_exception": 460,
+        "auth_authorization": 3
+      }
+    },
+    "database_exception": {
+      "sample_count": 500,
+      "accuracy": 0.0,
+      "f1_score": 0.0,
+      "prediction_distribution": {
+        "stack_exception": 429,
+        "business_logic": 70,
+        "auth_authorization": 1
+      }
+    },
+    "memory_performance": {
+      "sample_count": 500,
+      "accuracy": 0.0,
+      "f1_score": 0.0,
+      "prediction_distribution": {
+        "stack_exception": 304,
+        "business_logic": 168,
+        "auth_authorization": 28
+      }
+    },
+    "monitoring_heartbeat": {
+      "sample_count": 500,
+      "accuracy": 0.0,
+      "f1_score": 0.0,
+      "prediction_distribution": {
+        "stack_exception": 362,
+        "business_logic": 138
+      }
+    },
+    "normal_operation": {
+      "sample_count": 500,
+      "accuracy": 0.0,
+      "f1_score": 0.0,
+      "prediction_distribution": {
+        "business_logic": 191,
+        "stack_exception": 301,
+        "auth_authorization": 8
+      }
+    },
+    "stack_exception": {
+      "sample_count": 500,
+      "accuracy": 0.584,
+      "f1_score": 0.7373737373737373,
+      "prediction_distribution": {
+        "stack_exception": 292,
+        "business_logic": 166,
+        "auth_authorization": 42
+      }
+    }
+  },
+  "validation_summary": [
+    {
+      "validation_name": "validation_1",
+      "accuracy": 0.114,
+      "f1_score": 0.051978611154020075
+    },
+    {
+      "validation_name": "validation_2",
+      "accuracy": 0.114,
+      "f1_score": 0.051978611154020075
+    },
+    {
+      "validation_name": "validation_3",
+      "accuracy": 0.114,
+      "f1_score": 0.051978611154020075
+    }
+  ]
+}

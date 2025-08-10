@@ -499,7 +499,7 @@ class FeatureEnhancedTrainer:
                 break
         
         # 保存结果
-        self._save_results(model, label_encoder, feature_extractor, best_acc, best_f1, {
+        self._save_results(model, label_encoder, feature_extractor, vocab, best_acc, best_f1, {
             'train_losses': train_losses,
             'val_losses': val_losses,
             'train_accs': train_accs,
@@ -509,7 +509,7 @@ class FeatureEnhancedTrainer:
         
         return model, label_encoder, feature_extractor
     
-    def _save_results(self, model, label_encoder, feature_extractor, best_acc, best_f1, history):
+    def _save_results(self, model, label_encoder, feature_extractor, vocab, best_acc, best_f1, history):
         """保存训练结果"""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         
@@ -521,12 +521,14 @@ class FeatureEnhancedTrainer:
             'model_state_dict': model.state_dict(),
             'label_encoder': label_encoder,
             'feature_extractor': feature_extractor,
+            'vocab': vocab,  # 保存词汇表
             'best_acc': best_acc,
             'best_f1': best_f1,
             'timestamp': timestamp
         }, model_path)
         
         logger.info(f"💾 模型已保存: {model_path}")
+        logger.info(f"📚 词汇表已保存，大小: {len(vocab)}")
         
         # 保存训练历史
         history_path = f"results/history/feature_enhanced_history_{timestamp}.json"

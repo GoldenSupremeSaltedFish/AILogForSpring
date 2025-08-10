@@ -1,0 +1,182 @@
+{
+  "timestamp": "20250810_085424",
+  "model_path": "results/models/feature_enhanced_model_20250809_103658.pth",
+  "data_path": "data/processed_logs_advanced_enhanced.csv",
+  "statistics": {
+    "accuracy": {
+      "mean": 0.11014814814814815,
+      "std": 0.005149080650957855,
+      "min": 0.10333333333333333,
+      "max": 0.11577777777777777
+    },
+    "f1_score": {
+      "mean": 0.11010794159812111,
+      "std": 0.0051565586429998395,
+      "min": 0.10325995665545872,
+      "max": 0.11570310247076215
+    }
+  },
+  "category_analysis": {
+    "auth_authorization": {
+      "sample_count": 500,
+      "accuracy": 0.11,
+      "f1_score": 0.1981981981981982,
+      "prediction_distribution": {
+        "business_logic": 67,
+        "memory_performance": 58,
+        "database_exception": 53,
+        "normal_operation": 66,
+        "stack_exception": 51,
+        "config_environment": 48,
+        "auth_authorization": 55,
+        "connection_issue": 46,
+        "monitoring_heartbeat": 56
+      }
+    },
+    "business_logic": {
+      "sample_count": 500,
+      "accuracy": 0.122,
+      "f1_score": 0.21746880570409982,
+      "prediction_distribution": {
+        "business_logic": 61,
+        "stack_exception": 48,
+        "memory_performance": 57,
+        "normal_operation": 67,
+        "config_environment": 61,
+        "monitoring_heartbeat": 57,
+        "auth_authorization": 52,
+        "connection_issue": 51,
+        "database_exception": 46
+      }
+    },
+    "config_environment": {
+      "sample_count": 500,
+      "accuracy": 0.124,
+      "f1_score": 0.2206405693950178,
+      "prediction_distribution": {
+        "stack_exception": 41,
+        "database_exception": 62,
+        "business_logic": 53,
+        "normal_operation": 54,
+        "config_environment": 62,
+        "auth_authorization": 55,
+        "monitoring_heartbeat": 68,
+        "connection_issue": 61,
+        "memory_performance": 44
+      }
+    },
+    "connection_issue": {
+      "sample_count": 500,
+      "accuracy": 0.12,
+      "f1_score": 0.21428571428571427,
+      "prediction_distribution": {
+        "monitoring_heartbeat": 48,
+        "memory_performance": 56,
+        "stack_exception": 60,
+        "database_exception": 35,
+        "config_environment": 60,
+        "normal_operation": 68,
+        "business_logic": 56,
+        "connection_issue": 60,
+        "auth_authorization": 57
+      }
+    },
+    "database_exception": {
+      "sample_count": 500,
+      "accuracy": 0.094,
+      "f1_score": 0.17184643510054845,
+      "prediction_distribution": {
+        "auth_authorization": 65,
+        "business_logic": 48,
+        "connection_issue": 59,
+        "database_exception": 47,
+        "monitoring_heartbeat": 58,
+        "memory_performance": 55,
+        "config_environment": 56,
+        "normal_operation": 55,
+        "stack_exception": 57
+      }
+    },
+    "memory_performance": {
+      "sample_count": 500,
+      "accuracy": 0.112,
+      "f1_score": 0.2014388489208633,
+      "prediction_distribution": {
+        "monitoring_heartbeat": 52,
+        "memory_performance": 56,
+        "business_logic": 58,
+        "database_exception": 61,
+        "connection_issue": 56,
+        "config_environment": 53,
+        "stack_exception": 64,
+        "normal_operation": 44,
+        "auth_authorization": 56
+      }
+    },
+    "monitoring_heartbeat": {
+      "sample_count": 500,
+      "accuracy": 0.106,
+      "f1_score": 0.19168173598553345,
+      "prediction_distribution": {
+        "business_logic": 65,
+        "config_environment": 47,
+        "memory_performance": 59,
+        "connection_issue": 63,
+        "database_exception": 56,
+        "normal_operation": 58,
+        "monitoring_heartbeat": 53,
+        "auth_authorization": 45,
+        "stack_exception": 54
+      }
+    },
+    "normal_operation": {
+      "sample_count": 500,
+      "accuracy": 0.092,
+      "f1_score": 0.1684981684981685,
+      "prediction_distribution": {
+        "stack_exception": 57,
+        "memory_performance": 58,
+        "business_logic": 55,
+        "database_exception": 76,
+        "monitoring_heartbeat": 46,
+        "config_environment": 56,
+        "normal_operation": 46,
+        "connection_issue": 40,
+        "auth_authorization": 66
+      }
+    },
+    "stack_exception": {
+      "sample_count": 500,
+      "accuracy": 0.122,
+      "f1_score": 0.21746880570409982,
+      "prediction_distribution": {
+        "business_logic": 65,
+        "auth_authorization": 48,
+        "database_exception": 61,
+        "monitoring_heartbeat": 40,
+        "stack_exception": 61,
+        "connection_issue": 53,
+        "config_environment": 57,
+        "normal_operation": 60,
+        "memory_performance": 55
+      }
+    }
+  },
+  "validation_summary": [
+    {
+      "validation_name": "validation_1",
+      "accuracy": 0.11577777777777777,
+      "f1_score": 0.11570310247076215
+    },
+    {
+      "validation_name": "validation_2",
+      "accuracy": 0.10333333333333333,
+      "f1_score": 0.10325995665545872
+    },
+    {
+      "validation_name": "validation_3",
+      "accuracy": 0.11133333333333334,
+      "f1_score": 0.11136076566814246
+    }
+  ]
+}

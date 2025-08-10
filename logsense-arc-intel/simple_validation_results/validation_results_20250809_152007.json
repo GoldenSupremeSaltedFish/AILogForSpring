@@ -1,0 +1,127 @@
+{
+  "timestamp": "20250809_152007",
+  "model_path": "results/models/feature_enhanced_model_20250809_103658.pth",
+  "data_path": "data/processed_logs_advanced_enhanced.csv",
+  "statistics": {
+    "accuracy": {
+      "mean": 0.11577777777777777,
+      "std": 0.0,
+      "min": 0.11577777777777777,
+      "max": 0.11577777777777777
+    },
+    "f1_score": {
+      "mean": 0.03903059005065154,
+      "std": 0.0,
+      "min": 0.03903059005065154,
+      "max": 0.03903059005065154
+    }
+  },
+  "category_analysis": {
+    "auth_authorization": {
+      "sample_count": 500,
+      "accuracy": 0.958,
+      "f1_score": 0.9785495403472931,
+      "prediction_distribution": {
+        "auth_authorization": 479,
+        "monitoring_heartbeat": 6,
+        "stack_exception": 13,
+        "memory_performance": 2
+      }
+    },
+    "business_logic": {
+      "sample_count": 500,
+      "accuracy": 0.0,
+      "f1_score": 0.0,
+      "prediction_distribution": {
+        "auth_authorization": 470,
+        "monitoring_heartbeat": 30
+      }
+    },
+    "config_environment": {
+      "sample_count": 500,
+      "accuracy": 0.0,
+      "f1_score": 0.0,
+      "prediction_distribution": {
+        "auth_authorization": 488,
+        "memory_performance": 2,
+        "stack_exception": 4,
+        "monitoring_heartbeat": 6
+      }
+    },
+    "connection_issue": {
+      "sample_count": 500,
+      "accuracy": 0.0,
+      "f1_score": 0.0,
+      "prediction_distribution": {
+        "auth_authorization": 488,
+        "stack_exception": 9,
+        "monitoring_heartbeat": 3
+      }
+    },
+    "database_exception": {
+      "sample_count": 500,
+      "accuracy": 0.0,
+      "f1_score": 0.0,
+      "prediction_distribution": {
+        "auth_authorization": 498,
+        "memory_performance": 2
+      }
+    },
+    "memory_performance": {
+      "sample_count": 500,
+      "accuracy": 0.028,
+      "f1_score": 0.054474708171206226,
+      "prediction_distribution": {
+        "auth_authorization": 486,
+        "memory_performance": 14
+      }
+    },
+    "monitoring_heartbeat": {
+      "sample_count": 500,
+      "accuracy": 0.0,
+      "f1_score": 0.0,
+      "prediction_distribution": {
+        "auth_authorization": 500
+      }
+    },
+    "normal_operation": {
+      "sample_count": 500,
+      "accuracy": 0.0,
+      "f1_score": 0.0,
+      "prediction_distribution": {
+        "auth_authorization": 486,
+        "monitoring_heartbeat": 13,
+        "stack_exception": 1
+      }
+    },
+    "stack_exception": {
+      "sample_count": 500,
+      "accuracy": 0.056,
+      "f1_score": 0.10606060606060606,
+      "prediction_distribution": {
+        "auth_authorization": 457,
+        "memory_performance": 9,
+        "stack_exception": 28,
+        "monitoring_heartbeat": 5,
+        "config_environment": 1
+      }
+    }
+  },
+  "validation_summary": [
+    {
+      "validation_name": "validation_1",
+      "accuracy": 0.11577777777777777,
+      "f1_score": 0.03903059005065154
+    },
+    {
+      "validation_name": "validation_2",
+      "accuracy": 0.11577777777777777,
+      "f1_score": 0.03903059005065154
+    },
+    {
+      "validation_name": "validation_3",
+      "accuracy": 0.11577777777777777,
+      "f1_score": 0.03903059005065154
+    }
+  ]
+}

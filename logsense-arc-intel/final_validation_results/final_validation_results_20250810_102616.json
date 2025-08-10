@@ -1,0 +1,190 @@
+{
+  "timestamp": "20250810_102616",
+  "model_path": "results/models/feature_enhanced_model_20250809_103658.pth",
+  "data_path": "data/processed_logs_advanced_enhanced.csv",
+  "vocab_size": 4146,
+  "num_classes": 9,
+  "accuracy": 0.16377777777777777,
+  "f1_score": 0.07690532400011689,
+  "classification_report": {
+    "auth_authorization": {
+      "precision": 0.2828282828282828,
+      "recall": 0.056,
+      "f1-score": 0.09348914858096828,
+      "support": 500.0
+    },
+    "business_logic": {
+      "precision": 0.16005567153792624,
+      "recall": 0.46,
+      "f1-score": 0.23748064016520393,
+      "support": 500.0
+    },
+    "config_environment": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 500.0
+    },
+    "connection_issue": {
+      "precision": 0.4,
+      "recall": 0.012,
+      "f1-score": 0.02330097087378641,
+      "support": 500.0
+    },
+    "database_exception": {
+      "precision": 0.95,
+      "recall": 0.038,
+      "f1-score": 0.07307692307692308,
+      "support": 500.0
+    },
+    "memory_performance": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 500.0
+    },
+    "monitoring_heartbeat": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 500.0
+    },
+    "normal_operation": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 500.0
+    },
+    "stack_exception": {
+      "precision": 0.15500170706725844,
+      "recall": 0.908,
+      "f1-score": 0.2648002333041703,
+      "support": 500.0
+    },
+    "accuracy": 0.16377777777777777,
+    "macro avg": {
+      "precision": 0.21643174015927416,
+      "recall": 0.1637777777777778,
+      "f1-score": 0.07690532400011689,
+      "support": 4500.0
+    },
+    "weighted avg": {
+      "precision": 0.21643174015927416,
+      "recall": 0.16377777777777777,
+      "f1-score": 0.07690532400011689,
+      "support": 4500.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      28,
+      239,
+      0,
+      4,
+      0,
+      0,
+      0,
+      0,
+      229
+    ],
+    [
+      0,
+      230,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      270
+    ],
+    [
+      6,
+      131,
+      0,
+      5,
+      1,
+      0,
+      0,
+      0,
+      357
+    ],
+    [
+      0,
+      67,
+      0,
+      6,
+      0,
+      0,
+      0,
+      0,
+      427
+    ],
+    [
+      14,
+      166,
+      0,
+      0,
+      19,
+      0,
+      0,
+      0,
+      301
+    ],
+    [
+      28,
+      237,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      235
+    ],
+    [
+      0,
+      158,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      342
+    ],
+    [
+      8,
+      178,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      314
+    ],
+    [
+      15,
+      31,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      454
+    ]
+  ],
+  "class_names": [
+    "auth_authorization",
+    "business_logic",
+    "config_environment",
+    "connection_issue",
+    "database_exception",
+    "memory_performance",
+    "monitoring_heartbeat",
+    "normal_operation",
+    "stack_exception"
+  ]
+}

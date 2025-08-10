@@ -1,0 +1,127 @@
+{
+  "timestamp": "20250810_091151",
+  "model_path": "results/models/feature_enhanced_model_20250809_103658.pth",
+  "data_path": "data/processed_logs_advanced_enhanced.csv",
+  "statistics": {
+    "accuracy": {
+      "mean": 0.11022222222222222,
+      "std": 0.0,
+      "min": 0.11022222222222222,
+      "max": 0.11022222222222222
+    },
+    "f1_score": {
+      "mean": 0.04828247635001493,
+      "std": 0.0,
+      "min": 0.04828247635001493,
+      "max": 0.04828247635001493
+    }
+  },
+  "category_analysis": {
+    "auth_authorization": {
+      "sample_count": 500,
+      "accuracy": 0.05,
+      "f1_score": 0.09523809523809523,
+      "prediction_distribution": {
+        "business_logic": 244,
+        "stack_exception": 227,
+        "auth_authorization": 25,
+        "connection_issue": 4
+      }
+    },
+    "business_logic": {
+      "sample_count": 500,
+      "accuracy": 0.38,
+      "f1_score": 0.5507246376811594,
+      "prediction_distribution": {
+        "stack_exception": 290,
+        "business_logic": 190,
+        "auth_authorization": 20
+      }
+    },
+    "config_environment": {
+      "sample_count": 500,
+      "accuracy": 0.0,
+      "f1_score": 0.0,
+      "prediction_distribution": {
+        "stack_exception": 307,
+        "business_logic": 177,
+        "auth_authorization": 11,
+        "connection_issue": 5
+      }
+    },
+    "connection_issue": {
+      "sample_count": 500,
+      "accuracy": 0.0,
+      "f1_score": 0.0,
+      "prediction_distribution": {
+        "business_logic": 44,
+        "stack_exception": 456
+      }
+    },
+    "database_exception": {
+      "sample_count": 500,
+      "accuracy": 0.0,
+      "f1_score": 0.0,
+      "prediction_distribution": {
+        "business_logic": 169,
+        "stack_exception": 330,
+        "auth_authorization": 1
+      }
+    },
+    "memory_performance": {
+      "sample_count": 500,
+      "accuracy": 0.0,
+      "f1_score": 0.0,
+      "prediction_distribution": {
+        "stack_exception": 263,
+        "business_logic": 237
+      }
+    },
+    "monitoring_heartbeat": {
+      "sample_count": 500,
+      "accuracy": 0.0,
+      "f1_score": 0.0,
+      "prediction_distribution": {
+        "stack_exception": 342,
+        "business_logic": 158
+      }
+    },
+    "normal_operation": {
+      "sample_count": 500,
+      "accuracy": 0.0,
+      "f1_score": 0.0,
+      "prediction_distribution": {
+        "business_logic": 195,
+        "stack_exception": 296,
+        "auth_authorization": 9
+      }
+    },
+    "stack_exception": {
+      "sample_count": 500,
+      "accuracy": 0.562,
+      "f1_score": 0.7195902688860435,
+      "prediction_distribution": {
+        "stack_exception": 281,
+        "business_logic": 174,
+        "auth_authorization": 45
+      }
+    }
+  },
+  "validation_summary": [
+    {
+      "validation_name": "validation_1",
+      "accuracy": 0.11022222222222222,
+      "f1_score": 0.04828247635001493
+    },
+    {
+      "validation_name": "validation_2",
+      "accuracy": 0.11022222222222222,
+      "f1_score": 0.04828247635001493
+    },
+    {
+      "validation_name": "validation_3",
+      "accuracy": 0.11022222222222222,
+      "f1_score": 0.04828247635001493
+    }
+  ]
+}
