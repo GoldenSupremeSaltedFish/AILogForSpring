@@ -1,0 +1,190 @@
+{
+  "timestamp": "20250810_234643",
+  "model_path": "results/models/feature_enhanced_model_20250810_222550.pth",
+  "data_path": "data/processed_logs_advanced_enhanced.csv",
+  "vocab_size": 4146,
+  "num_classes": 9,
+  "accuracy": 0.38177777777777777,
+  "f1_score": 0.3761512141998916,
+  "classification_report": {
+    "auth_authorization": {
+      "precision": 0.24568527918781727,
+      "recall": 0.484,
+      "f1-score": 0.32592592592592595,
+      "support": 500.0
+    },
+    "business_logic": {
+      "precision": 1.0,
+      "recall": 0.68,
+      "f1-score": 0.8095238095238095,
+      "support": 500.0
+    },
+    "config_environment": {
+      "precision": 0.16129032258064516,
+      "recall": 0.03,
+      "f1-score": 0.050590219224283306,
+      "support": 500.0
+    },
+    "connection_issue": {
+      "precision": 1.0,
+      "recall": 0.658,
+      "f1-score": 0.7937273823884198,
+      "support": 500.0
+    },
+    "database_exception": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 500.0
+    },
+    "memory_performance": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 500.0
+    },
+    "monitoring_heartbeat": {
+      "precision": 0.7829457364341085,
+      "recall": 0.606,
+      "f1-score": 0.6832018038331454,
+      "support": 500.0
+    },
+    "normal_operation": {
+      "precision": 0.13992172211350293,
+      "recall": 0.572,
+      "f1-score": 0.2248427672955975,
+      "support": 500.0
+    },
+    "stack_exception": {
+      "precision": 0.6424050632911392,
+      "recall": 0.406,
+      "f1-score": 0.49754901960784315,
+      "support": 500.0
+    },
+    "accuracy": 0.38177777777777777,
+    "macro avg": {
+      "precision": 0.4413609026230237,
+      "recall": 0.3817777777777778,
+      "f1-score": 0.3761512141998916,
+      "support": 4500.0
+    },
+    "weighted avg": {
+      "precision": 0.44136090262302363,
+      "recall": 0.38177777777777777,
+      "f1-score": 0.3761512141998916,
+      "support": 4500.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      242,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      252,
+      4
+    ],
+    [
+      0,
+      340,
+      0,
+      0,
+      0,
+      0,
+      0,
+      160,
+      0
+    ],
+    [
+      210,
+      0,
+      15,
+      0,
+      0,
+      0,
+      0,
+      260,
+      15
+    ],
+    [
+      95,
+      0,
+      10,
+      329,
+      0,
+      6,
+      0,
+      48,
+      12
+    ],
+    [
+      168,
+      0,
+      4,
+      0,
+      0,
+      0,
+      33,
+      229,
+      66
+    ],
+    [
+      139,
+      0,
+      27,
+      0,
+      0,
+      0,
+      0,
+      334,
+      0
+    ],
+    [
+      0,
+      0,
+      7,
+      0,
+      0,
+      0,
+      303,
+      190,
+      0
+    ],
+    [
+      125,
+      0,
+      22,
+      0,
+      0,
+      0,
+      51,
+      286,
+      16
+    ],
+    [
+      6,
+      0,
+      6,
+      0,
+      0,
+      0,
+      0,
+      285,
+      203
+    ]
+  ],
+  "class_names": [
+    "auth_authorization",
+    "business_logic",
+    "config_environment",
+    "connection_issue",
+    "database_exception",
+    "memory_performance",
+    "monitoring_heartbeat",
+    "normal_operation",
+    "stack_exception"
+  ]
+}
