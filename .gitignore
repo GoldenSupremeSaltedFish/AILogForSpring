@@ -1,28 +1,81 @@
-# Output directories
+# 敏感配置文件 - 本地配置，不上传
+config_extended.json
+config_test.json
+config_local.json
+config_production.json
+config.json
+config_*.json
+
+# 环境变量文件
+.env
+.env.local
+.env.production
+.env.*
+
+# 日志文件
+*.log
+logs/
+
+# 输出目录和数据文件
 DATA_OUTPUT/
 log-processing-OUTPUT/
 issue-logs/
 
-# Python
+# 数据集文件 - 不上传任何CSV数据
+*.csv
+*.xlsx
+*.xls
+*.json.gz
+*.csv.gz
+*.parquet
+*.hdf5
+*.h5
+*.feather
+*.arrow
+
+# 数据目录
+data/
+datasets/
+raw_data/
+processed_data/
+training_data/
+validation_data/
+test_data/
+
+# Python缓存
 __pycache__/
 *.py[cod]
 *$py.class
 
-# IDE
+# 模型文件
+*.pkl
+*.joblib
+*.h5
+*.pth
+*.pt
+*.onnx
+*.tflite
+*.pb
+
+# 临时文件
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# IDE文件
 .vscode/
 .idea/
+*.sublime-*
 
-# Environment
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 虚拟环境
 venv/
 env/
-.env
-
-# Configuration files with sensitive data
-config.json
-
-# Logs
-*.log
-
-# Data files
-*.csv
-*.pth
+.venv/
+.env/
