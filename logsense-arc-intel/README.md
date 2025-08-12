@@ -1,131 +1,152 @@
-# LogSense Intel Arc GPU 版本
+# Intel Arc GPU 日志分类项目
 
-基于Intel Arc GPU的日志分类系统，使用深度学习方法替代传统的TF-IDF + LightGBM方案。
+## 🎯 项目概述
 
-## 🎯 项目特点
+本项目使用Intel Arc GPU训练和部署深度学习日志分类模型，实现了从TF-IDF + LightGBM到GPU加速深度学习的完整转型。
 
-- **Intel Arc GPU 加速**: 完全支持Intel Arc显卡训练和推理
-- **模块化设计**: 清晰的代码结构，易于维护和扩展
-- **多种模型支持**: TextCNN、FastText等轻量级模型
-- **完整的训练流程**: 从数据预处理到模型部署的全流程
+## 🚀 核心特性
+
+- ✅ **Intel Arc GPU支持** - 使用XPU设备进行训练和推理
+- ✅ **双通道深度学习模型** - TextCNN + 结构化特征融合
+- ✅ **词汇表持久化** - 训练时保存词汇表，确保验证一致性
+- ✅ **高质量数据处理** - 结构化特征提取和数据增强
+- ✅ **工程化验证** - 解耦的验证脚本，支持GPU推理
 
 ## 📁 项目结构
 
 ```
 logsense-arc-intel/
-├── models/                 # 模型定义
-│   ├── __init__.py
-│   ├── textcnn.py         # TextCNN模型
-│   ├── fasttext.py        # FastText模型
-│   └── model_factory.py   # 模型工厂
-├── data/                   # 数据处理
-│   ├── __init__.py
-│   ├── dataset.py         # 数据集类
-│   ├── data_loader.py     # 数据加载器
-│   └── preprocessor.py    # 数据预处理器
-├── utils/                  # 工具模块
-│   ├── __init__.py
-│   ├── gpu_detector.py    # GPU检测器
-│   ├── trainer_utils.py   # 训练工具
-│   ├── model_saver.py     # 模型保存器
-│   └── metrics.py         # 指标计算
-├── api/                    # API服务
-│   ├── __init__.py
-│   ├── server.py          # 主服务器
-│   └── predictor.py       # 预测器
-├── config/                 # 配置文件
-│   ├── __init__.py
-│   └── settings.py        # 全局设置
-├── scripts/                # 脚本文件
-│   ├── train.py           # 训练脚本
-│   ├── test.py            # 测试脚本
-│   └── deploy.py          # 部署脚本
-├── requirements.txt        # 依赖文件
-└── README.md              # 项目文档
+├── feature_enhanced_model.py      # 🎯 最终训练脚本（包含词汇表保存）
+├── final_model_runner.py          # 🎯 最终验证脚本（GPU推理）
+├── prepare_full_data.py           # 📊 数据处理脚本
+├── requirements.txt               # 📦 依赖文件
+├── README.md                      # 📖 项目说明
+├── TRAINING_SUMMARY.md            # 📋 训练总结
+├── data/                          # 📁 数据目录
+├── results/                       # 📁 训练结果
+├── final_validation_results/      # 📁 验证结果
+├── scripts/                       # 📁 工具脚本
+├── models/                        # 📁 模型文件
+└── utils/                         # 📁 工具函数
 ```
 
-## 🚀 快速开始
+## 🎮 硬件要求
 
-### 1. 环境准备
+- **GPU**: Intel Arc GPU (支持XPU)
+- **Python**: 3.8+
+- **PyTorch**: Intel XPU版本
+
+## 🛠️ 快速开始
+
+### 1. 环境安装
 
 ```bash
-# 安装Intel Extension for PyTorch
-pip install intel-extension-for-pytorch
+# 安装Intel PyTorch XPU版本
+pip install torch torchvision torchaudio --extra-index-url https://pytorch-extension.intel.com/release-whl/stable/cpu/us/
 
 # 安装其他依赖
 pip install -r requirements.txt
 ```
 
-### 2. 检查GPU状态
+### 2. 数据准备
 
 ```bash
-python scripts/check_gpu.py
+python prepare_full_data.py
 ```
 
-### 3. 训练模型
+### 3. 模型训练
 
 ```bash
-python scripts/train.py --model textcnn --data DATA_OUTPUT/processed_logs.csv
+python feature_enhanced_model.py
 ```
 
-### 4. 启动API服务
+### 4. 模型验证
 
 ```bash
-python scripts/deploy.py --model results/models/best_model.pth
+python final_model_runner.py --model_path "results/models/feature_enhanced_model_*.pth" --data_path "data/processed_logs_advanced_enhanced.csv"
 ```
 
-## 🔧 配置说明
+## 🏗️ 模型架构
 
-### 模型配置
+### 双通道深度学习模型
 
-- **TextCNN**: 适合日志分类的卷积神经网络
-- **FastText**: 轻量级的文本分类模型
+1. **文本通道 (TextCNN)**
+   - Embedding层 (128维)
+   - 多尺度卷积 (3,4,5窗口)
+   - MaxPooling + Dropout
 
-### GPU配置
+2. **结构化特征通道 (MLP)**
+   - 1018维特征输入
+   - 256 → 128维隐藏层
+   - ReLU + Dropout
 
-- 自动检测Intel Arc GPU
-- 支持XPU设备加速
-- 自动回退到CPU
+3. **特征融合层**
+   - 文本特征 + 结构化特征
+   - 256维融合层
+   - 最终分类层
 
-## 📊 性能优化
+## 📊 性能指标
 
-- 使用Intel Extension for PyTorch
-- 支持ONNX模型导出
-- 优化的数据加载和预处理
-- 内存使用监控
+- **训练准确率**: 97.8%
+- **验证准确率**: 94.7%
+- **全量数据准确率**: 38.2% (数据分布差异导致)
+- **GPU加速**: Intel Arc XPU设备
 
-## 🛠️ 开发指南
+## 🔧 核心功能
 
-### 添加新模型
+### 训练脚本 (`feature_enhanced_model.py`)
+- ✅ Intel Arc GPU (XPU) 支持
+- ✅ 词汇表构建和保存
+- ✅ 结构化特征提取
+- ✅ 早停和模型保存
+- ✅ 训练历史记录
 
-1. 在`models/`目录下创建新模型文件
-2. 实现`forward()`方法
-3. 在`model_factory.py`中注册模型
+### 验证脚本 (`final_model_runner.py`)
+- ✅ GPU推理支持
+- ✅ 词汇表加载
+- ✅ 批量预测
+- ✅ 详细性能报告
+- ✅ 结果保存
 
-### 自定义数据预处理
+### 数据处理 (`prepare_full_data.py`)
+- ✅ 日志清洗和预处理
+- ✅ 结构化特征提取
+- ✅ 数据平衡和质量增强
+- ✅ 多类别支持
 
-1. 继承`LogPreprocessor`类
-2. 重写预处理方法
-3. 在训练脚本中使用
+## 📈 训练历史
 
-## 📈 监控和日志
+- **模型**: `feature_enhanced_model_20250810_222550.pth`
+- **词汇表大小**: 4146
+- **类别数**: 9
+- **训练轮数**: 15 epochs
+- **最佳验证准确率**: 94.67%
 
-- 训练过程实时监控
-- GPU使用率统计
-- 模型性能指标
-- 详细的日志记录
+## 🎯 使用场景
 
-## 🤝 贡献指南
+1. **日志分类**: 自动识别日志类型
+2. **异常检测**: 快速定位问题日志
+3. **运维监控**: 实时日志分析
+4. **性能优化**: GPU加速推理
 
-1. Fork项目
-2. 创建功能分支
-3. 提交更改
-4. 创建Pull Request
+## 🔍 验证结果
 
-## 📄 许可证
+最新验证结果保存在 `final_validation_results/` 目录中，包含：
+- JSON格式的详细指标
+- 文本格式的分类报告
+- 混淆矩阵和性能分析
 
-MIT License
+## 📝 注意事项
 
-## 📞 联系方式
+1. **GPU要求**: 需要Intel Arc GPU和XPU驱动
+2. **数据一致性**: 验证时使用相同的数据分布
+3. **词汇表**: 训练时保存的词汇表必须用于验证
+4. **特征维度**: 确保1018维结构化特征
 
-如有问题，请提交Issue或联系开发团队。 
+## 🤝 贡献
+
+欢迎提交Issue和Pull Request来改进项目。
+
+## �� 许可证
+
+MIT License 

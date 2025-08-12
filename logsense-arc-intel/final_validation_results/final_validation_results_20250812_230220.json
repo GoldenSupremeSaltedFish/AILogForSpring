@@ -1,0 +1,190 @@
+{
+  "timestamp": "20250812_230220",
+  "model_path": "results/models/feature_enhanced_model_20250812_130803.pth",
+  "data_path": "data/improved_validation_adapted.csv",
+  "vocab_size": 4146,
+  "num_classes": 9,
+  "accuracy": 0.12454479242534595,
+  "f1_score": 0.10285570345447241,
+  "classification_report": {
+    "auth_authorization": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 58.0
+    },
+    "business_logic": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 151.0
+    },
+    "config_environment": {
+      "precision": 0.008130081300813009,
+      "recall": 0.03225806451612903,
+      "f1-score": 0.012987012987012988,
+      "support": 31.0
+    },
+    "connection_issue": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 295.0
+    },
+    "database_exception": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 295.0
+    },
+    "memory_performance": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 21.0
+    },
+    "monitoring_heartbeat": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 18.0
+    },
+    "normal_operation": {
+      "precision": 0.36363636363636365,
+      "recall": 0.2761904761904762,
+      "f1-score": 0.31393775372124494,
+      "support": 420.0
+    },
+    "stack_exception": {
+      "precision": 0.05818965517241379,
+      "recall": 0.6428571428571429,
+      "f1-score": 0.1067193675889328,
+      "support": 84.0
+    },
+    "accuracy": 0.12454479242534595,
+    "macro avg": {
+      "precision": 0.04777290001217672,
+      "recall": 0.10570063150708313,
+      "f1-score": 0.04818268158857675,
+      "support": 1373.0
+    },
+    "weighted avg": {
+      "precision": 0.11497977879248411,
+      "recall": 0.12454479242534598,
+      "f1-score": 0.10285570345447241,
+      "support": 1373.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      17,
+      40
+    ],
+    [
+      1,
+      0,
+      8,
+      0,
+      0,
+      0,
+      0,
+      48,
+      94
+    ],
+    [
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      11,
+      19
+    ],
+    [
+      0,
+      0,
+      25,
+      0,
+      0,
+      0,
+      0,
+      50,
+      220
+    ],
+    [
+      1,
+      0,
+      8,
+      0,
+      0,
+      0,
+      0,
+      48,
+      238
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      5,
+      16
+    ],
+    [
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      4,
+      12
+    ],
+    [
+      1,
+      0,
+      68,
+      0,
+      0,
+      0,
+      0,
+      116,
+      235
+    ],
+    [
+      0,
+      0,
+      10,
+      0,
+      0,
+      0,
+      0,
+      20,
+      54
+    ]
+  ],
+  "class_names": [
+    "auth_authorization",
+    "business_logic",
+    "config_environment",
+    "connection_issue",
+    "database_exception",
+    "memory_performance",
+    "monitoring_heartbeat",
+    "normal_operation",
+    "stack_exception"
+  ]
+}

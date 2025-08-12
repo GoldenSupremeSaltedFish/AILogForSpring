@@ -195,6 +195,14 @@ class FinalModelRunner:
             # 提取组件
             self.label_encoder = checkpoint['label_encoder']
             
+            # 加载训练时保存的词汇表
+            if 'vocab' in checkpoint:
+                self.vocab = checkpoint['vocab']
+                logger.info(f"📚 加载训练时保存的词汇表，大小: {len(self.vocab)}")
+            else:
+                logger.warning("⚠️ 未找到训练时保存的词汇表，将重新构建")
+                self.vocab = None
+            
             # 保存checkpoint供后续使用
             self.checkpoint = checkpoint
             
@@ -274,9 +282,13 @@ class FinalModelRunner:
             for category, count in category_counts.items():
                 logger.info(f"   {category}: {count}")
             
-            # 构建词汇表
+            # 使用已加载的词汇表，如果没有则重新构建
             texts = df_cleaned['cleaned_log'].tolist()
-            self.vocab = self.build_vocab_from_data(texts)
+            if self.vocab is None:
+                logger.info("🔤 重新构建词汇表...")
+                self.vocab = self.build_vocab_from_data(texts)
+            else:
+                logger.info(f"📚 使用已加载的词汇表，大小: {len(self.vocab)}")
             
             # 提取结构化特征
             texts, struct_features = self.extract_features(df_cleaned)
