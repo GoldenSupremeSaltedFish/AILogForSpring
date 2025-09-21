@@ -1,0 +1,78 @@
+{
+  "pipeline_config": {
+    "enable_templating": true,
+    "enable_feature_engineering": true,
+    "enable_ml_classification": true,
+    "enable_human_review": true,
+    "enable_quality_analysis": true,
+    "max_per_class": 500,
+    "confidence_threshold": 0.7
+  },
+  "templating_config": {
+    "noise_patterns": {
+      "timestamp": true,
+      "thread_id": true,
+      "uuid": true,
+      "request_id": true,
+      "ip_address": true,
+      "port_number": true,
+      "file_path": true,
+      "line_number": true,
+      "memory_address": true,
+      "session_id": true
+    },
+    "exception_keywords": {
+      "java": true,
+      "spring": true,
+      "database": true,
+      "network": true,
+      "web": true
+    }
+  },
+  "feature_engineering_config": {
+    "structural_features": {
+      "log_level": true,
+      "contains_stack": true,
+      "exception_type": true,
+      "file_path": true,
+      "function_name": true,
+      "line_number": true,
+      "text_statistics": true
+    },
+    "semantic_features": {
+      "tfidf_max_features": 1000,
+      "tfidf_ngram_range": [1, 2],
+      "template_id_buckets": 100,
+      "exception_keyword_buckets": 50
+    }
+  },
+  "classification_config": {
+    "rules": {
+      "priority_order": [
+        "stack_exception",
+        "spring_boot_startup_failure", 
+        "auth_authorization",
+        "database_exception",
+        "connection_issue",
+        "timeout",
+        "memory_performance",
+        "config_environment",
+        "business_logic",
+        "normal_operation",
+        "monitoring_heartbeat"
+      ]
+    },
+    "ml_models": {
+      "primary": "lightgbm",
+      "fallback": "naive_bayes",
+      "use_tfidf": true,
+      "use_template_features": true
+    }
+  },
+  "quality_thresholds": {
+    "min_classification_coverage": 80.0,
+    "max_manual_annotation_ratio": 30.0,
+    "min_high_priority_ratio": 10.0,
+    "max_high_priority_ratio": 50.0
+  }
+}
