@@ -16,6 +16,7 @@
 
 ```
 logsense-arc-intel/
+├── main.py                        # 🚀 主入口文件
 ├── feature_enhanced_model.py      # 🎯 最终训练脚本（包含词汇表保存）
 ├── final_model_runner.py          # 🎯 最终验证脚本（GPU推理）
 ├── prepare_full_data.py           # 📊 数据处理脚本
@@ -25,7 +26,18 @@ logsense-arc-intel/
 ├── data/                          # 📁 数据目录
 ├── results/                       # 📁 训练结果
 ├── final_validation_results/      # 📁 验证结果
-├── scripts/                       # 📁 工具脚本
+├── tools/                         # 🔧 工具脚本集合
+│   ├── adapt_issue_data.py        # 数据适配工具
+│   ├── check_model.py             # 模型检查工具
+│   ├── check_weights.py           # 权重检查工具
+│   ├── filter_known_labels.py     # 标签过滤工具
+│   ├── improved_data_processor.py # 数据处理工具
+│   ├── prepare_issue_data.py      # 问题数据准备工具
+│   ├── simple_text_validator.py   # 简单文本验证工具
+│   ├── simple_validation_runner.py # 简单验证运行工具
+│   ├── validation_data_adapter.py # 验证数据适配工具
+│   └── fixed_model_runner.py      # 修复的模型运行工具
+├── scripts/                       # 📁 训练脚本
 ├── models/                        # 📁 模型文件
 └── utils/                         # 📁 工具函数
 ```
@@ -51,19 +63,57 @@ pip install -r requirements.txt
 ### 2. 数据准备
 
 ```bash
-python prepare_full_data.py
+python main.py --mode prepare
 ```
 
 ### 3. 模型训练
 
 ```bash
-python feature_enhanced_model.py
+python main.py --mode train
 ```
 
 ### 4. 模型验证
 
 ```bash
-python final_model_runner.py --model_path "results/models/feature_enhanced_model_*.pth" --data_path "data/processed_logs_advanced_enhanced.csv"
+python main.py --mode validate --model_path "results/models/feature_enhanced_model_*.pth"
+```
+
+### 5. 模型检查
+
+```bash
+python main.py --mode check --model_path "results/models/feature_enhanced_model_*.pth"
+```
+
+### 6. 使用工具脚本
+
+**方式一：直接运行工具脚本**
+```bash
+# 数据适配
+python tools/adapt_issue_data.py
+
+# 模型检查
+python tools/check_model.py
+
+# 权重检查
+python tools/check_weights.py
+```
+
+**方式二：通过兼容性运行器（推荐）**
+```bash
+# 数据适配
+python run_tool.py adapt_issue_data
+
+# 模型检查
+python run_tool.py check_model
+
+# 权重检查
+python run_tool.py check_weights
+```
+
+**方式三：通过主入口文件**
+```bash
+# 模型检查
+python main.py --mode check --model_path "results/models/best_model.pth"
 ```
 
 ## 🏗️ 模型架构
