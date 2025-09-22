@@ -1,0 +1,67 @@
+{
+  "service": {
+    "host": "0.0.0.0",
+    "port": 5000,
+    "debug": false,
+    "auto_reload": true
+  },
+  "classification": {
+    "use_ml": true,
+    "confidence_threshold": 0.7,
+    "batch_size": 1000,
+    "max_log_length": 10000
+  },
+  "data_paths": {
+    "input": "DATA_OUTPUT/原始项目数据_original",
+    "output": "log-processing-OUTPUT",
+    "models": "logsense-xpu/models",
+    "reports": "log-processing-OUTPUT/reports"
+  },
+  "classification_rules": {
+    "priority_order": [
+      "stack_exception",
+      "spring_boot_startup_failure", 
+      "auth_authorization",
+      "database_exception",
+      "connection_issue",
+      "timeout",
+      "memory_performance",
+      "config_environment",
+      "business_logic",
+      "normal_operation",
+      "monitoring_heartbeat"
+    ],
+    "auto_manual_annotation": {
+      "high_priority_categories": [
+        "stack_exception",
+        "spring_boot_startup_failure",
+        "auth_authorization",
+        "database_exception"
+      ],
+      "error_level_required": true,
+      "low_confidence_threshold": 0.7
+    }
+  },
+  "quality_thresholds": {
+    "min_classification_coverage": 80.0,
+    "max_manual_annotation_ratio": 30.0,
+    "min_high_priority_ratio": 10.0,
+    "max_high_priority_ratio": 50.0
+  },
+  "logging": {
+    "level": "INFO",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    "file": "logs/classifier_service.log"
+  },
+  "api": {
+    "cors_enabled": true,
+    "rate_limit": {
+      "enabled": true,
+      "requests_per_minute": 100
+    },
+    "timeout": {
+      "request_timeout": 30,
+      "batch_timeout": 300
+    }
+  }
+}
